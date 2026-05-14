@@ -56,7 +56,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <link rel="stylesheet" href="static/css/index.css?v=13">
+  <link rel="stylesheet" href="static/css/index.css?v=14">
 
   <!-- KaTeX math renderer (defer-loaded, then init in index.js) -->
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
@@ -176,22 +176,39 @@
     <!-- End teaser image -->
 
 
-    <!-- Abstract -->
-    <section class="section hero is-light">
+    <!-- TL;DR pitch (formerly "Abstract" — rephrased as a magazine-style deck) -->
+    <section class="section hero is-light" id="tldr">
       <div class="container is-max-desktop">
-        <div class="columns is-centered has-text-centered">
+        <div class="columns is-centered">
           <div class="column is-four-fifths">
-            <h2 class="title is-3">Abstract</h2>
-            <div class="content has-text-justified">
-              <p>
-                World models predict robot futures and steer policies &mdash; until the robot drifts <strong>out of distribution</strong> and the predictions go stale. We turn each executed action into a free correction signal: the gap between the model's prediction and the robot's <em>actual</em> next observation is fed back online to keep the world model honest &mdash; <strong>no extra training data, no parameter updates</strong>. Combined with <span class="keyword-highlight-contrary">action-aware guidance</span> that focuses on the dimensions a robot can actually move, this closed-loop view forms our <span class="keyword-highlight-primary">feedback world model</span>, cutting world-model prediction error by up to <strong>76.4%</strong> and lifting OOD success rate by <strong>30%</strong> on simulated and real-world manipulation.
+            <div class="tldr-block">
+              <div class="tldr-ornament" aria-hidden="true"></div>
+
+              <p class="tldr-lead">
+                World models predict robot futures and steer policies&mdash;until the robot drifts <em>out of distribution</em> and the predictions go stale.
               </p>
+
+              <p class="tldr-body">
+                We turn each executed action into a free correction signal: the gap between the model's prediction and the robot's <em>actual</em> next observation is fed back online to keep the world model honest&mdash;with <strong>no extra training data, no parameter updates</strong>. Combined with <span class="keyword-highlight-contrary">action-aware guidance</span> that focuses on the dimensions a robot can actually move, this closed-loop view forms our <span class="keyword-highlight-primary">feedback world model</span>.
+              </p>
+
+              <div class="tldr-stats">
+                <div class="stat-card stat-card-red">
+                  <div class="stat-num">&darr;&nbsp;76.4%</div>
+                  <div class="stat-label">world-model prediction error</div>
+                </div>
+                <div class="stat-divider" aria-hidden="true"></div>
+                <div class="stat-card stat-card-green">
+                  <div class="stat-num">&uarr;&nbsp;30%</div>
+                  <div class="stat-label">OOD success rate</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <!-- End abstract -->
+    <!-- End TL;DR -->
 
 
     <!-- Real-World Task Demos (moved up — hero-of-the-page, eye-catching evidence) -->

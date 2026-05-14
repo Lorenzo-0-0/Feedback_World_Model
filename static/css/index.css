@@ -842,6 +842,96 @@ a:focus {
   font-weight: 700;
 }
 
+/* === TL;DR pitch block — magazine-deck presentation (replaces "Abstract") === */
+.tldr-block {
+  max-width: 820px;
+  margin: 0.5rem auto;
+  padding: 0.5rem 0 0;
+  text-align: center;
+}
+.tldr-ornament {
+  position: relative;
+  width: 96px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 220, 220, 0.55), transparent);
+  margin: 0 auto 2rem;
+}
+.tldr-ornament::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(0, 220, 220, 0.9);
+  box-shadow: 0 0 12px rgba(0, 220, 220, 0.5);
+}
+.tldr-lead {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.55rem !important;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #ffffff;
+  letter-spacing: -0.005em;
+  margin: 0 auto 1.5rem !important;
+  max-width: 760px;
+}
+.tldr-lead em { font-style: italic; color: #ff8c8c; font-weight: 700; }
+.tldr-body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.05rem !important;
+  line-height: 1.85 !important;
+  color: #d4d4d4 !important;
+  max-width: 720px;
+  margin: 0 auto 2.25rem !important;
+  text-align: center;
+}
+.tldr-body em { color: #d4d4d4; }
+.tldr-body strong { color: #ffffff !important; }
+
+.tldr-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.2rem;
+  margin-top: 1.6rem;
+  flex-wrap: wrap;
+}
+.stat-card { text-align: center; padding: 0 0.5rem; }
+.stat-num {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: 0.005em;
+  margin-bottom: 0.3rem;
+  line-height: 1;
+}
+.stat-card-red   .stat-num { color: #ff5b5b; text-shadow: 0 0 24px rgba(255, 91, 91, 0.25); }
+.stat-card-green .stat-num { color: #34d6a0; text-shadow: 0 0 24px rgba(52, 214, 160, 0.25); }
+.stat-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.62);
+  font-weight: 500;
+}
+.stat-divider {
+  width: 1px;
+  height: 52px;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+}
+
+@media screen and (max-width: 720px) {
+  .tldr-lead { font-size: 1.25rem !important; line-height: 1.4; }
+  .tldr-body { font-size: 0.98rem !important; line-height: 1.75 !important; text-align: justify; }
+  .stat-num { font-size: 1.9rem; }
+  .stat-divider { width: 60px; height: 1px; }
+  .tldr-stats { flex-direction: column; gap: 1.2rem; }
+}
+
 /* === Algorithm 1 card — academic-paper feel on dark theme === */
 .algorithm-card {
   max-width: 880px;
