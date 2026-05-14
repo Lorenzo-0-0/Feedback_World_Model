@@ -184,14 +184,7 @@
             <h2 class="title is-3">Abstract</h2>
             <div class="content has-text-justified">
               <p>
-                World models aim to improve robotic decision making by predicting the consequences of actions.
-                However, in practice, their predictions often become unreliable once the robot encounters states outside the training distribution, limiting their effectiveness at deployment.
-                We observe that execution itself provides a natural but underutilized signal: after each action, the robot directly observes the true next state, revealing the mismatch between predicted and actual outcomes.
-                Building on this insight, we propose <span class="keyword-highlight-primary">feedback world model</span>, a new paradigm that closes the loop between prediction and observation at inference time.
-                Instead of treating the world model as a static open-loop predictor, our method maintains a lightweight feedback state that is updated online to iteratively correct future predictions, compensating for model errors using real-time observations without additional training data or parameter updates.
-                We show that this process can be interpreted as a <em>latent-space observer</em> and admits convergence guarantees under mild conditions.
-                We further introduce <span class="keyword-highlight-contrary">action-aware guidance</span> to better translate corrected predictions into control by emphasizing action-controllable components while suppressing irrelevant variations.
-                Experiments on LIBERO-Plus, Robomimic, and real-world manipulation tasks demonstrate that our method substantially improves both prediction accuracy and policy performance under distribution shift. In particular, it reduces world model prediction error by up to <strong>76.4%</strong> and improves out-of-distribution (OOD) success rate by <strong>30%</strong>. These results show that incorporating real-time feedback at inference time provides a simple yet powerful alternative to static world modeling.
+                World models predict robot futures and steer policies &mdash; until the robot drifts <strong>out of distribution</strong> and the predictions go stale. We turn each executed action into a free correction signal: the gap between the model's prediction and the robot's <em>actual</em> next observation is fed back online to keep the world model honest &mdash; <strong>no extra training data, no parameter updates</strong>. Combined with <span class="keyword-highlight-contrary">action-aware guidance</span> that focuses on the dimensions a robot can actually move, this closed-loop view forms our <span class="keyword-highlight-primary">feedback world model</span>, cutting world-model prediction error by up to <strong>76.4%</strong> and lifting OOD success rate by <strong>30%</strong> on simulated and real-world manipulation.
               </p>
             </div>
           </div>
@@ -201,33 +194,113 @@
     <!-- End abstract -->
 
 
-    <!-- Key Contributions -->
-    <section class="section">
+    <!-- Real-World Task Demos (moved up — hero-of-the-page, eye-catching evidence) -->
+    <section class="section" id="real-world-demos">
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column is-full">
-            <h2 class="title is-3">Key Contributions</h2>
+            <h2 class="title is-3">Real-World Demos</h2>
             <div class="content has-text-justified">
-              <ol>
-                <li>
-                  <strong>Feedback world model.</strong>
-                  A closed-loop inference paradigm that turns real-time observations into an online corrective signal. Prediction stays reliable under distribution shift &mdash; with negligible overhead, no extra training data, and provable convergence under a linear feedback formulation.
-                </li>
-                <li>
-                  <strong>Action-aware guidance.</strong>
-                  A controllability-weighted guidance scheme that focuses the policy on latent dimensions the action can actually influence, instead of treating every component of the predicted observation equally.
-                </li>
-                <li>
-                  <strong>Consistent empirical gains.</strong>
-                  On LIBERO-Plus, Robomimic, and two real-world manipulation tasks, the method improves both world-model prediction accuracy and downstream policy success &mdash; cutting prediction error by up to <strong>76.4%</strong> and lifting OOD success rate by <strong>30%</strong>.
-                </li>
-              </ol>
+              <p>
+                Three tasks on a physical arm, two policies side by side: <span class="demo-tag demo-tag-baseline">Baseline</span> diffusion policy (left) versus <span class="demo-tag demo-tag-ours">Ours</span> with the feedback world model and action-aware guidance (right). The robot starts each rollout from an out-of-distribution pose; clips loop at <strong>8&times;</strong> real time, shown from a top-down and a side camera.
+              </p>
             </div>
+
+            <!-- Task 1: Peach Pick-and-Place -->
+            <div class="demo-task">
+              <h3 class="demo-task-title">Peach Pick-and-Place</h3>
+              <div class="demo-grid">
+                <div class="demo-card demo-card-baseline">
+                  <div class="demo-card-header"><span class="demo-dot"></span>Baseline</div>
+                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
+                       poster="static/images/posters/peach_baseline_top.jpg">
+                    <source src="static/videos/real_world/peach_baseline_top.mp4" type="video/mp4">
+                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Top-down</span></div>
+                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
+                       poster="static/images/posters/peach_baseline_side.jpg">
+                    <source src="static/videos/real_world/peach_baseline_side.mp4" type="video/mp4">
+                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Side</span></div>
+                </div>
+                <div class="demo-card demo-card-ours">
+                  <div class="demo-card-header"><span class="demo-dot"></span>Ours</div>
+                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
+                       poster="static/images/posters/peach_ours_top.jpg">
+                    <source src="static/videos/real_world/peach_ours_top.mp4" type="video/mp4">
+                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Top-down</span></div>
+                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
+                       poster="static/images/posters/peach_ours_side.jpg">
+                    <source src="static/videos/real_world/peach_ours_side.mp4" type="video/mp4">
+                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Side</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Task 2: Drawer-Open -->
+            <div class="demo-task">
+              <h3 class="demo-task-title">Drawer-Open</h3>
+              <div class="demo-grid">
+                <div class="demo-card demo-card-baseline">
+                  <div class="demo-card-header"><span class="demo-dot"></span>Baseline</div>
+                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
+                       poster="static/images/posters/drawer1_baseline_top.jpg">
+                    <source src="static/videos/real_world/drawer1_baseline_top.mp4" type="video/mp4">
+                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Top-down</span></div>
+                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
+                       poster="static/images/posters/drawer1_baseline_side.jpg">
+                    <source src="static/videos/real_world/drawer1_baseline_side.mp4" type="video/mp4">
+                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Side</span></div>
+                </div>
+                <div class="demo-card demo-card-ours">
+                  <div class="demo-card-header"><span class="demo-dot"></span>Ours</div>
+                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
+                       poster="static/images/posters/drawer1_ours_top.jpg">
+                    <source src="static/videos/real_world/drawer1_ours_top.mp4" type="video/mp4">
+                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Top-down</span></div>
+                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
+                       poster="static/images/posters/drawer1_ours_side.jpg">
+                    <source src="static/videos/real_world/drawer1_ours_side.mp4" type="video/mp4">
+                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Side</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Task 3: Drawer-Open Variation -->
+            <div class="demo-task">
+              <h3 class="demo-task-title">Drawer-Open &mdash; Variation</h3>
+              <div class="demo-grid">
+                <div class="demo-card demo-card-baseline">
+                  <div class="demo-card-header"><span class="demo-dot"></span>Baseline</div>
+                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
+                       poster="static/images/posters/drawer2_baseline_top.jpg">
+                    <source src="static/videos/real_world/drawer2_baseline_top.mp4" type="video/mp4">
+                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Top-down</span></div>
+                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
+                       poster="static/images/posters/drawer2_baseline_side.jpg">
+                    <source src="static/videos/real_world/drawer2_baseline_side.mp4" type="video/mp4">
+                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Side</span></div>
+                </div>
+                <div class="demo-card demo-card-ours">
+                  <div class="demo-card-header"><span class="demo-dot"></span>Ours</div>
+                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
+                       poster="static/images/posters/drawer2_ours_top.jpg">
+                    <source src="static/videos/real_world/drawer2_ours_top.mp4" type="video/mp4">
+                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Top-down</span></div>
+                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
+                       poster="static/images/posters/drawer2_ours_side.jpg">
+                    <source src="static/videos/real_world/drawer2_ours_side.mp4" type="video/mp4">
+                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Side</span></div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
     </section>
-    <!-- End key contributions -->
+    <!-- End real-world demos -->
+
+
+<!-- (Key Contributions section removed per teacher feedback — its content lives in the new punchy Abstract above.) -->
 
 
     <!-- Method -->
@@ -460,7 +533,7 @@
 
 
     <!-- Simulation OOD Scenes -->
-    <section class="section" id="simulation-ood-scenes">
+    <section class="section hero is-light" id="simulation-ood-scenes">
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column is-full">
@@ -562,110 +635,7 @@
     <!-- End simulation OOD scenes -->
 
 
-    <!-- Real-World Task Demos -->
-    <section class="section hero is-light" id="real-world-demos">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column is-full">
-            <h2 class="title is-3">Real-World Task Demos</h2>
-            <div class="content has-text-justified">
-              <p>
-                Three real-world tasks, two policies, two camera angles. <span class="demo-tag demo-tag-baseline">Baseline</span> diffusion policy on the left; <span class="demo-tag demo-tag-ours">Ours</span> (with the feedback world model and action-aware guidance) on the right. Each rollout is shown from a top-down and a side view, with the initial pose pushed off-distribution. All clips loop at <strong>8&times;</strong> real-time.
-              </p>
-            </div>
-
-            <!-- Task 1: Peach Pick-and-Place -->
-            <div class="demo-task">
-              <h3 class="demo-task-title">Peach Pick-and-Place</h3>
-              <div class="demo-grid">
-                <div class="demo-card demo-card-baseline">
-                  <div class="demo-card-header"><span class="demo-dot"></span>Baseline</div>
-                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
-                       poster="static/images/posters/peach_baseline_top.jpg">
-                    <source src="static/videos/real_world/peach_baseline_top.mp4" type="video/mp4">
-                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Top-down</span></div>
-                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
-                       poster="static/images/posters/peach_baseline_side.jpg">
-                    <source src="static/videos/real_world/peach_baseline_side.mp4" type="video/mp4">
-                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Side</span></div>
-                </div>
-                <div class="demo-card demo-card-ours">
-                  <div class="demo-card-header"><span class="demo-dot"></span>Ours</div>
-                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
-                       poster="static/images/posters/peach_ours_top.jpg">
-                    <source src="static/videos/real_world/peach_ours_top.mp4" type="video/mp4">
-                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Top-down</span></div>
-                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
-                       poster="static/images/posters/peach_ours_side.jpg">
-                    <source src="static/videos/real_world/peach_ours_side.mp4" type="video/mp4">
-                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Side</span></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Task 2: Drawer-Open -->
-            <div class="demo-task">
-              <h3 class="demo-task-title">Drawer-Open</h3>
-              <div class="demo-grid">
-                <div class="demo-card demo-card-baseline">
-                  <div class="demo-card-header"><span class="demo-dot"></span>Baseline</div>
-                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
-                       poster="static/images/posters/drawer1_baseline_top.jpg">
-                    <source src="static/videos/real_world/drawer1_baseline_top.mp4" type="video/mp4">
-                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Top-down</span></div>
-                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
-                       poster="static/images/posters/drawer1_baseline_side.jpg">
-                    <source src="static/videos/real_world/drawer1_baseline_side.mp4" type="video/mp4">
-                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Side</span></div>
-                </div>
-                <div class="demo-card demo-card-ours">
-                  <div class="demo-card-header"><span class="demo-dot"></span>Ours</div>
-                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
-                       poster="static/images/posters/drawer1_ours_top.jpg">
-                    <source src="static/videos/real_world/drawer1_ours_top.mp4" type="video/mp4">
-                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Top-down</span></div>
-                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
-                       poster="static/images/posters/drawer1_ours_side.jpg">
-                    <source src="static/videos/real_world/drawer1_ours_side.mp4" type="video/mp4">
-                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Side</span></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Task 3: Drawer-Open #2 -->
-            <div class="demo-task">
-              <h3 class="demo-task-title">Drawer-Open &mdash; Variation</h3>
-              <div class="demo-grid">
-                <div class="demo-card demo-card-baseline">
-                  <div class="demo-card-header"><span class="demo-dot"></span>Baseline</div>
-                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
-                       poster="static/images/posters/drawer2_baseline_top.jpg">
-                    <source src="static/videos/real_world/drawer2_baseline_top.mp4" type="video/mp4">
-                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Top-down</span></div>
-                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
-                       poster="static/images/posters/drawer2_baseline_side.jpg">
-                    <source src="static/videos/real_world/drawer2_baseline_side.mp4" type="video/mp4">
-                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Side</span></div>
-                </div>
-                <div class="demo-card demo-card-ours">
-                  <div class="demo-card-header"><span class="demo-dot"></span>Ours</div>
-                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
-                       poster="static/images/posters/drawer2_ours_top.jpg">
-                    <source src="static/videos/real_world/drawer2_ours_top.mp4" type="video/mp4">
-                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Top-down</span></div>
-                  <div class="demo-video"><video autoplay controls loop muted playsinline preload="metadata"
-                       poster="static/images/posters/drawer2_ours_side.jpg">
-                    <source src="static/videos/real_world/drawer2_ours_side.mp4" type="video/mp4">
-                  </video><span class="demo-speed">8&times;</span><span class="demo-view">Side</span></div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End real-world demos -->
+    <!-- (Real-World Task Demos moved up to right after Abstract.) -->
 
 
     <!-- BibTeX -->
