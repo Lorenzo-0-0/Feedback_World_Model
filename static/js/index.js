@@ -72,6 +72,12 @@
     // Real-world demo videos: pause when off-screen, resume autoplay when in view.
     // Avoids CPU thrash from 12 simultaneous decoders.
     const demoVideos = document.querySelectorAll('#real-world-demos video');
+    // Source clips are pre-encoded at 8x; double the playback rate to land at 16x.
+    demoVideos.forEach(v => {
+      const setRate = () => { v.playbackRate = 2.0; };
+      setRate();
+      v.addEventListener('loadedmetadata', setRate);
+    });
     if (demoVideos.length && 'IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
