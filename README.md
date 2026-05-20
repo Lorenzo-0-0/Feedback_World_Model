@@ -1,4 +1,4 @@
-<h1 align="center">🔁 Feedback World Model Enables<br />Precise Guidance of Diffusion Policy</h1>
+<h1 align="center">Feedback World Model Enables<br />Precise Guidance of Diffusion Policy</h1>
 
 <p align="center">
   <a href="https://arxiv.org/abs/2605.15705"><img src="https://img.shields.io/badge/arXiv-2605.15705-b31b1b?logo=arxiv&logoColor=white" alt="arXiv" /></a>
