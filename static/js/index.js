@@ -91,5 +91,20 @@
       }, { threshold: 0.15, rootMargin: '120px 0px' });
       demoVideos.forEach(v => io.observe(v));
     }
+
+    // Overview video: custom play button + hide overlays during playback.
+    // Native controls still handle scrubbing; this is progressive enhancement.
+    const ovVideo = document.getElementById('overview-video');
+    const ovFrame = ovVideo && ovVideo.closest('.overview-video-frame');
+    const ovPlay = ovFrame && ovFrame.querySelector('.ov-play');
+    if (ovVideo && ovFrame && ovPlay) {
+      // First click on the custom button: reveal native controls (for scrubbing),
+      // hide the overlays, and start playback. From then on the native bar drives it.
+      ovPlay.addEventListener('click', () => {
+        ovVideo.controls = true;
+        ovFrame.classList.add('is-playing');
+        ovVideo.play().catch(() => {});
+      });
+    }
   });
 })();

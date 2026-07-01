@@ -56,7 +56,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <link rel="stylesheet" href="static/css/index.css?v=14">
+  <link rel="stylesheet" href="static/css/index.css?v=15">
 
   <!-- KaTeX math renderer (defer-loaded, then init in index.js) -->
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
@@ -176,6 +176,35 @@
       </div>
     </section>
     <!-- End teaser image -->
+
+
+    <!-- Overview video (narrated paper walkthrough) — inline hero player, click-to-play -->
+    <section class="section overview-video-section">
+      <div class="container is-max-desktop">
+        <div class="overview-video-head">
+          <span class="ov-eyebrow"><span class="ov-dot"></span>Overview Video</span>
+          <h2 class="ov-title">Watch the 3-minute walkthrough</h2>
+        </div>
+
+        <figure class="overview-video-frame">
+          <video id="overview-video" class="overview-video" preload="none" playsinline
+                 poster="static/images/overview_poster.jpg">
+            <source src="static/videos/overview.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <button type="button" class="ov-play" aria-label="Play the overview video">
+            <span class="ov-play-ring"></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.79-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14z"/></svg>
+          </button>
+          <span class="ov-duration" aria-hidden="true">3:26</span>
+        </figure>
+
+        <p class="overview-video-caption">
+          A narrated tour of the <strong>feedback world model</strong>: the closed-loop framework, action-aware guidance, and real-world results.
+        </p>
+      </div>
+    </section>
+    <!-- End overview video -->
 
 
     <!-- TL;DR pitch (formerly "Abstract" — rephrased as a magazine-style deck) -->
@@ -706,7 +735,7 @@
 
   </main>
 
-  <script src="static/js/index.js?v=13" defer></script>
+  <script src="static/js/index.js?v=15" defer></script>
 </body>
 
 </html>
